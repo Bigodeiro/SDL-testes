@@ -16,9 +16,25 @@ int main(int argc, char** argv)
     //!aqui estamos pegando a parte da janela que criamos em que relamente podemos mexer, como se fosse um canva
     SDL_Surface *screen = SDL_GetWindowSurface(window);
 
-    //!destruindo a jenela desocupamos o espaço na memoria e portanto encerramos o programa
-    cout << "esta rodando" << endl;
-    SDL_Delay(3000);
+    //! Com essa série de while loops conseguimos criar um event listener primitivo e, assim, fechar o programa desocupando espaço na memoria corretamente
+    bool running = true;
+    cout << "Programa inciado" << endl;
+    while (running)
+    {
+        SDL_Event event;
+        while (SDL_PollEvent(&event))
+        {
+            switch (event.type)
+            {
+            case SDL_QUIT:
+                running = false;
+                break;
+            default:
+                cout << "Programa rodando" << endl;
+                break;
+            }
+        }
+    }
     SDL_DestroyWindow(window); //? fecha a janela
     SDL_Quit();                //? cuida da memoria
     return 0;
